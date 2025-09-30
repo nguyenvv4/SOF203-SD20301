@@ -2,6 +2,7 @@ package com.example.sd20301.buoi6.servlet;
 
 import java.io.*;
 
+import com.example.sd20301.buoi6.model.SinhVien;
 import com.example.sd20301.buoi6.service.SinhVienService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -10,6 +11,7 @@ import jakarta.servlet.annotation.*;
 @WebServlet(name = "SinhVienServletServlet", value = {
         "/sinh-vien/hien-thi",
         "/sinh-vien/xoa",// dinh nghia la phuong thuc get => viet vao doGet
+        "/sinh-vien/them", //them moi 1 sv. dinh nghia phuong thuc la Post => viet trong doPost
 
 })
 public class SinhVienServlet extends HttpServlet {
@@ -18,11 +20,12 @@ public class SinhVienServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getRequestURI();
-        if(uri.contains("hien-thi")) {
+        if (uri.contains("hien-thi")) {
             hienThi(request, response);
-        }else if (uri.contains("xoa")){
+        } else if (uri.contains("xoa")) {
             xoa(request, response);
         }
+        // hien thi chi tiet sinh vien
     }
 
     private void xoa(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -30,7 +33,7 @@ public class SinhVienServlet extends HttpServlet {
         // lay id cua sinh vien nhw the nao ?
         // ten tham so se la "id"
         Integer id = Integer.parseInt(request.getParameter("id"));
-        System.out.println("id la :"+id);
+        System.out.println("id la :" + id);
         sinhVienService.deleteSinhVien(id);
         // sau khi xoa xong => quay lai trang hien thi
         // sendRedirect mo ra duong dan servlet co san
@@ -44,6 +47,23 @@ public class SinhVienServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String uri = request.getRequestURI();
+        if (uri.contains("/sinh-vien/them")) {
+            them(request, response);
+        }
+    }
 
+    private void them(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // lay thong tin tren form xuong
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        String ten = request.getParameter("ten");
+        Float diem = Float.parseFloat(request.getParameter("diem"));
+        Boolean gt = Boolean.parseBoolean(request.getParameter("gioiTinh"));
+        // tao ra sinh vien
+        SinhVien sinhVien = new SinhVien(id, ten, diem, gt);
+        sinhVienService.addSinhVien(sinhVien);
+        // sau khi xoa xong => quay lai trang hien thi
+        // sendRedirect mo ra duong dan servlet co san
+        response.sendRedirect("/sinh-vien/hien-thi");
     }
 }

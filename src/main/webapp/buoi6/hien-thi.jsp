@@ -12,6 +12,20 @@
     <title>Title</title>
 </head>
 <body>
+Them moi sinh vien:
+<form action="/sinh-vien/them" method="post">
+    <label>id</label>
+    <input type="text" name="id"> <br>
+    <label>Ten</label>
+    <input type="text" name="ten"> <br>
+    <label>Diem</label>
+    <input type="text" name="diem"> <br>
+    <label>Gioi tinh</label>
+    <input type="radio" name="gioiTinh" value="true"> Nam
+    <input type="radio" name="gioiTinh" value="false"> Nu
+    <br>
+    <button>Them moi</button>
+</form>
 Bang thong tin:
 <table>
     <thead>
