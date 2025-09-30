@@ -15,4 +15,14 @@ public class SinhVien {
     private String ten;
     private Float diem;
     private Boolean gioiTinh;
+
+    @Override
+    public String toString() {
+        return "SinhVien{" +
+                "id=" + id +
+                ", ten='" + ten + '\'' +
+                ", diem=" + diem +
+                ", gioiTinh=" + gioiTinh +
+                '}';
+    }
 }

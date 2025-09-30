@@ -12,6 +12,8 @@ import jakarta.servlet.annotation.*;
         "/sinh-vien/hien-thi",
         "/sinh-vien/xoa",// dinh nghia la phuong thuc get => viet vao doGet
         "/sinh-vien/them", //them moi 1 sv. dinh nghia phuong thuc la Post => viet trong doPost
+        "/sinh-vien/chi-tiet", // hien thi chi tiet 1 sinh vien => dinh nghia la doGet
+
 
 })
 public class SinhVienServlet extends HttpServlet {
@@ -24,8 +26,21 @@ public class SinhVienServlet extends HttpServlet {
             hienThi(request, response);
         } else if (uri.contains("xoa")) {
             xoa(request, response);
+        }else if (uri.contains("/sinh-vien/chi-tiet")) {
+            chiTiet(request, response);
         }
         // hien thi chi tiet sinh vien
+    }
+
+    private void chiTiet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // lay id cua sinh vien
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        // lay thong tin sinh vien theo id
+        request.setAttribute("sinhVien",  sinhVienService.getDetail(id));
+        // lay lai danh sach ban dau
+        request.setAttribute("danhSach", sinhVienService.getAll());
+        request.getRequestDispatcher("/buoi6/hien-thi.jsp").forward(request, response);
+
     }
 
     private void xoa(HttpServletRequest request, HttpServletResponse response) throws IOException {
