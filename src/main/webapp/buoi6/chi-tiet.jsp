@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/sinh-vien/them" method="post">
+<form action="/sinh-vien/cap-nhat" method="post">
     <label>id</label>
     <input type="text" name="id" value="${sinhVien.id}"> <br>
     <label>Ten</label>
