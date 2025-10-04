@@ -13,7 +13,7 @@ import jakarta.servlet.annotation.*;
         "/sinh-vien/xoa",// dinh nghia la phuong thuc get => viet vao doGet
         "/sinh-vien/them", //them moi 1 sv. dinh nghia phuong thuc la Post => viet trong doPost
         "/sinh-vien/chi-tiet", // hien thi chi tiet 1 sinh vien => dinh nghia la doGet
-
+        "/sinh-vien/cap-nhat"// doPost
 
 })
 public class SinhVienServlet extends HttpServlet {
@@ -26,7 +26,7 @@ public class SinhVienServlet extends HttpServlet {
             hienThi(request, response);
         } else if (uri.contains("xoa")) {
             xoa(request, response);
-        }else if (uri.contains("/sinh-vien/chi-tiet")) {
+        } else if (uri.contains("/sinh-vien/chi-tiet")) {
             chiTiet(request, response);
         }
         // hien thi chi tiet sinh vien
@@ -36,10 +36,10 @@ public class SinhVienServlet extends HttpServlet {
         // lay id cua sinh vien
         Integer id = Integer.parseInt(request.getParameter("id"));
         // lay thong tin sinh vien theo id
-        request.setAttribute("sinhVien",  sinhVienService.getDetail(id));
+        request.setAttribute("sinhVien", sinhVienService.getDetail(id));
         // lay lai danh sach ban dau
         request.setAttribute("danhSach", sinhVienService.getAll());
-        request.getRequestDispatcher("/buoi6/hien-thi.jsp").forward(request, response);
+        request.getRequestDispatcher("/buoi6/chi-tiet.jsp").forward(request, response);
 
     }
 
@@ -65,7 +65,20 @@ public class SinhVienServlet extends HttpServlet {
         String uri = request.getRequestURI();
         if (uri.contains("/sinh-vien/them")) {
             them(request, response);
+        } else if (uri.contains("/sinh-vien/cap-nhat")) {
+            capNhat(request, response);
         }
+    }
+
+    private void capNhat(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        String ten = request.getParameter("ten");
+        Float diem = Float.parseFloat(request.getParameter("diem"));
+        Boolean gt = Boolean.parseBoolean(request.getParameter("gioiTinh"));
+        // tao ra sinh vien
+        SinhVien sinhVien = new SinhVien(id, ten, diem, gt);
+        sinhVienService.updateSinhVien(sinhVien);
+        response.sendRedirect("/sinh-vien/hien-thi");
     }
 
     private void them(HttpServletRequest request, HttpServletResponse response) throws IOException {
