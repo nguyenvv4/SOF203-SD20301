@@ -1,4 +1,4 @@
-package com.example.sd20301.jdbc;
+package com.example.sd20301.jdbc.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
