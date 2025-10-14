@@ -12,4 +12,20 @@ public class XeMayService {
     public ArrayList<XeMay> getList() {
         return xeMayRepository.getList();
     }
+
+    public XeMay getXeMayBySoKhung(String soKhung) {
+        return xeMayRepository.getXeMayBySoKhung(soKhung);
+    }
+
+    public void themXeMay(XeMay xeMay) {
+        xeMayRepository.addXeMay(xeMay);
+    }
+
+    public void updateXeMay(XeMay xeMay) {
+        xeMayRepository.updateXeMay(xeMay);
+    }
+
+    public void deleteXeMay(String soKhung) {
+        xeMayRepository.deleteXeMay(soKhung);
+    }
 }
